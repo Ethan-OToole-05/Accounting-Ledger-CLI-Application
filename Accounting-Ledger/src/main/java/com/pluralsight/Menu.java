@@ -23,8 +23,6 @@ public class Menu {
         //Takes users input
     }
 
-    public void
-
     public void displayAddDeposit() {
         System.out.println();
         System.out.println("Please enter deposit information below.");
@@ -39,6 +37,13 @@ public class Menu {
         System.out.println("Format is description:vendor:amount ");
         System.out.print("Payment Input: ");
         //Takes the users input.
+    }
+
+    public void displayDeposits() {
+        System.out.println("Here are all deposits: ");
+        for (Deposit deposit : Ledger.getDeposits()) {
+            System.out.println(deposit);
+        }
     }
 
     public void displayReports() {

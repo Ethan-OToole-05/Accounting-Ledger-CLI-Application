@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Ledger {
-    private ArrayList<Deposit> deposits = new ArrayList<>();
-    private ArrayList<Payment> payments = new ArrayList<>();
+    private static ArrayList<Deposit> deposits = new ArrayList<>();
+    private static ArrayList<Payment> payments = new ArrayList<>();
 
     public Ledger() {
 
@@ -21,7 +21,7 @@ public class Ledger {
             String input;
 
             while((input = reader.readLine()) != null) {
-                if(input.startsWith("id")) {
+                if(input.startsWith("Date")) {
                     continue;
                 }
                 String[] items = input.split("\\|");
@@ -29,7 +29,13 @@ public class Ledger {
                 String description = items[2];
                 String vendor = items[3];
                 float amount = Float.parseFloat(items[4]);
-                deposits.add(new Deposit(amount, description, vendor));
+                if(amount < 0) {
+                    continue;
+                }
+                else {
+                    deposits.add(new Deposit(amount, description, vendor));
+                }
+
             }
             reader.close();
         } catch(IOException e) {
@@ -45,7 +51,7 @@ public class Ledger {
             String input;
 
             while((input = reader.readLine()) != null) {
-                if(input.startsWith("id")) {
+                if(input.startsWith("Date")) {
                     continue;
                 }
                 String[] items = input.split("\\|");
@@ -53,7 +59,13 @@ public class Ledger {
                 String description = items[2];
                 String vendor = items[3];
                 float amount = Float.parseFloat(items[4]);
-                payments.add(new Payment(amount, description, vendor));
+                if(amount > 0 ) {
+                    continue;
+                }
+                else {
+                    payments.add(new Payment(amount, description, vendor));
+                }
+
             }
             reader.close();
         } catch(IOException e) {
@@ -61,4 +73,12 @@ public class Ledger {
         }
         return payments;
     }
+
+    public static ArrayList<Deposit> getDeposits() {
+        return deposits;
+    }
+    public static ArrayList<Payment> getPayments() {
+        return payments;
+    }
+
 }

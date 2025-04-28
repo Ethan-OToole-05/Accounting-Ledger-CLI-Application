@@ -6,6 +6,9 @@ public class AccountingApp {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Menu menu = new Menu();
+        Ledger ledger = new Ledger();
+        ledger.loadDeposits();
+//        ledger.loadPayments();
         String userOption = "";
         Boolean continueAnswer = true;
         System.out.println("Welcome to the account ledger app!");
@@ -17,12 +20,14 @@ public class AccountingApp {
             switch(option) {
                 case 'D':
                     menu.displayAddDeposit();
+
                     break;
                 case 'P':
                     menu.displayMakePayment();
                     break;
                 case 'L':
                     menu.displayLedger();
+                    menu.displayDeposits();
                     break;
                 case 'X':
                     //Exits the program.
