@@ -28,4 +28,9 @@ public class Deposit {
     public String getVendor() {
         return this.vendor;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%.2f %s %s", amount, description, vendor);
+    }
 }

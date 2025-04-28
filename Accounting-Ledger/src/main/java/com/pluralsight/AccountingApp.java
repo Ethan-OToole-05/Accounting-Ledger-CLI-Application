@@ -7,26 +7,29 @@ public class AccountingApp {
         Scanner input = new Scanner(System.in);
         Menu menu = new Menu();
         String userOption = "";
-        char option = userOption.trim().toUpperCase().charAt(0);
         Boolean continueAnswer = true;
         System.out.println("Welcome to the account ledger app!");
 
         while(continueAnswer) {
             menu.displayHome();
             userOption = input.nextLine();
-
+            char option = userOption.trim().toUpperCase().charAt(0);
             switch(option) {
                 case 'D':
-                    //Prompt to add a deposit info.
+                    menu.displayAddDeposit();
+                    break;
                 case 'P':
-                    //Prompt to make a payment.
+                    menu.displayMakePayment();
+                    break;
                 case 'L':
-                    //Displays the ledger screen.
+                    menu.displayLedger();
+                    break;
                 case 'X':
                     //Exits the program.
+                    System.out.println("Thank you for using the app!");
                     System.exit(0);
                 default:
-                    System.exit(0);
+                    System.out.println("Invalid input. Please try again. ");
             }
         }
     }
