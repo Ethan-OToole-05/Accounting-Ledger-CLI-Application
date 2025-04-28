@@ -49,23 +49,27 @@ public class Ledger {
 
     public static void addDeposit(String description, String vendor, float amount) {
         try {
-            FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
-            BufferedWriter writer = new BufferedWriter(fileWriter);
+            if (amount < 0) {
+                System.out.println("Invalid Input. Please make sure amount is positive for adding a deposit.");
+            } else {
+                FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
+                BufferedWriter writer = new BufferedWriter(fileWriter);
 
-            //Gets time and date right now.
-            LocalDateTime now;
-            now = timeStamp.getTimestamp();
-            String formattedTime = timeStamp.formatTimestamp(now);
+                //Gets time and date right now.
+                LocalDateTime now;
+                now = timeStamp.getTimestamp();
+                String formattedTime = timeStamp.formatTimestamp(now);
 
-            writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
-            writer.newLine();
-            writer.close();
-            deposits.add(new Deposit(amount, description, vendor));
+                writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
+                writer.newLine();
+                writer.close();
+                deposits.add(new Deposit(amount, description, vendor));
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
 
     //Needs to be static to work? Might be because deposits is static?
@@ -103,19 +107,25 @@ public class Ledger {
         }
         return payments;
     }
+
     public static void addPayment(String description, String vendor, float amount) {
         try {
-            FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
-            BufferedWriter writer = new BufferedWriter(fileWriter);
+            if (amount > 0) {
+                System.out.println("Invalid input. Please make sure that amount is negative to represent payments.");
+            } else {
+                FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
+                BufferedWriter writer = new BufferedWriter(fileWriter);
 
-            LocalDateTime now;
-            now = timeStamp.getTimestamp();
-            String formattedTime = timeStamp.formatTimestamp(now);
+                LocalDateTime now;
+                now = timeStamp.getTimestamp();
+                String formattedTime = timeStamp.formatTimestamp(now);
 
-            writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
-            writer.newLine();
-            writer.close();
-            payments.add(new Payment(amount, description, vendor));
+                writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
+                writer.newLine();
+                writer.close();
+                payments.add(new Payment(amount, description, vendor));
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

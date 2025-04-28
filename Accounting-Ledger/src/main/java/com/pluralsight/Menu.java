@@ -1,6 +1,10 @@
 package com.pluralsight;
 
+
+import java.util.Scanner;
+
 public class Menu {
+    private static Scanner scanner;
 
     public void displayHome() {
         System.out.println();
@@ -10,7 +14,27 @@ public class Menu {
         System.out.println("L) Ledger");
         System.out.println("X) Exit");
         System.out.print("Option Selection: ");
-        //Takes users input
+        //Code below has an error taking in null on line 19.
+//        String stringOption = "";
+//        stringOption = scanner.nextLine();
+//        char option = stringOption.trim().toUpperCase().charAt(0);
+//        switch (option) {
+//            case 'D':
+//                displayAddDeposit();
+//                break;
+//            case 'P':
+//                displayMakePayment();
+//                break;
+//            case 'L':
+//                displayLedger();
+//                break;
+//            case 'X':
+//                System.out.println("Thank you for using the app!");
+//                System.exit(0);
+//            default:
+//                System.out.println("Invalid input please try again.");
+//
+//        }
     }
 
     public void displayLedger() {
@@ -27,6 +51,8 @@ public class Menu {
         System.out.println();
         System.out.println("Please enter deposit information below.");
         System.out.println("Format is description:vendor:amount ");
+        String input = "";
+
         System.out.print("Deposit Input: ");
         //Takes user input
     }

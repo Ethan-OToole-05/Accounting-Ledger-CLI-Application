@@ -20,11 +20,16 @@ public class AccountingApp {
             switch (option) {
                 case 'D':
                     menu.displayAddDeposit();
-                    Ledger.addDeposit("testDescription", "testVendor", 18.99f);
+                    String depositInput = input.nextLine();
+                    String[] depositItems = depositInput.split(":");
+                    Ledger.addDeposit(depositItems[0], depositItems[1], Float.parseFloat(depositItems[2]));
+//                    Ledger.addDeposit("testDescription", "testVendor", 18.99f);
                     break;
                 case 'P':
                     menu.displayMakePayment();
-                    Ledger.addPayment("testDescriptionPayment", "testPaymentVendor", -19.99f);
+                    String paymentInput = input.nextLine();
+                    String[] paymentItems = paymentInput.split(":");
+                    Ledger.addPayment(paymentItems[0], paymentItems[1], Float.parseFloat(paymentItems[2]));
                     break;
                 case 'L':
                     menu.displayLedger();
