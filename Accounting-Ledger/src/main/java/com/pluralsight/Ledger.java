@@ -60,28 +60,13 @@ public class Ledger {
             writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
             writer.newLine();
             writer.close();
+            deposits.add(new Deposit(amount, description, vendor));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void addPayment(String description, String vendor, float amount) {
-        try {
-            FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
-            BufferedWriter writer = new BufferedWriter(fileWriter);
 
-            LocalDateTime now;
-            now = timeStamp.getTimestamp();
-            String formattedTime = timeStamp.formatTimestamp(now);
-
-            writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
-            writer.newLine();
-            writer.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     //Needs to be static to work? Might be because deposits is static?
     //Todo: ***** LOOK INTO LATER *****
@@ -117,6 +102,23 @@ public class Ledger {
             e.printStackTrace();
         }
         return payments;
+    }
+    public static void addPayment(String description, String vendor, float amount) {
+        try {
+            FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
+            BufferedWriter writer = new BufferedWriter(fileWriter);
+
+            LocalDateTime now;
+            now = timeStamp.getTimestamp();
+            String formattedTime = timeStamp.formatTimestamp(now);
+
+            writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
+            writer.newLine();
+            writer.close();
+            payments.add(new Payment(amount, description, vendor));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
