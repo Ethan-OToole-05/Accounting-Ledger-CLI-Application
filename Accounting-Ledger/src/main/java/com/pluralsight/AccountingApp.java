@@ -33,11 +33,25 @@ public class AccountingApp {
                     break;
                 case 'L':
                     menu.displayLedger();
-                    menu.displayAll();
-                    System.out.println();
-                    menu.displayDeposits();
-                    System.out.println();
-                    menu.displayPayments();
+                    userOption = input.nextLine();
+                    option = userOption.trim().toUpperCase().charAt(0);
+                    switch (option) {
+                        case 'A':
+                            menu.displayAll();
+                            break;
+                        case 'D':
+                            menu.displayDeposits();
+                            break;
+                        case 'P':
+                            menu.displayPayments();
+                            break;
+                        case 'R':
+                            menu.displayReports();
+                            break;
+                        case 'H':
+                            menu.displayHome();
+                            break;
+                    }
                     break;
                 case 'X':
                     //Exits the program.
