@@ -3,10 +3,10 @@ package com.pluralsight;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Date {
+public class TimeStamp {
     private LocalDateTime timestamp;
 
-    public Date() {
+    public TimeStamp() {
 
     }
 

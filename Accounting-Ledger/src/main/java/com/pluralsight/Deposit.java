@@ -11,6 +11,7 @@ public class Deposit {
         this.description = "";
         this.vendor = "";
     }
+
     public Deposit(float amount, String description, String vendor) {
         this.amount = amount;
         this.description = description;

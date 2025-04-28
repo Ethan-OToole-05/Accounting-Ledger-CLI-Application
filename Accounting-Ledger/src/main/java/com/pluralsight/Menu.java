@@ -46,6 +46,25 @@ public class Menu {
         }
     }
 
+    public void displayPayments() {
+        System.out.println("Here are all payments: ");
+        for (Payment payment : Ledger.getPayments()) {
+            System.out.println(payment);
+        }
+    }
+
+    public void displayAll() {
+        System.out.println("Here are all deposits: ");
+        for (Deposit deposit : Ledger.getDeposits()) {
+            System.out.println(deposit);
+        }
+        System.out.println("Here are all payments: ");
+        for (Payment payment : Ledger.getPayments()) {
+            System.out.println(payment);
+        }
+    }
+
+
     public void displayReports() {
         System.out.println();
         System.out.println("Which format would you like the reports to be in? ");

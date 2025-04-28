@@ -1,13 +1,17 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class Ledger {
     private static ArrayList<Deposit> deposits = new ArrayList<>();
     private static ArrayList<Payment> payments = new ArrayList<>();
+    private static TimeStamp timeStamp = new TimeStamp();
 
     public Ledger() {
 
@@ -20,8 +24,8 @@ public class Ledger {
 
             String input;
 
-            while((input = reader.readLine()) != null) {
-                if(input.startsWith("Date")) {
+            while ((input = reader.readLine()) != null) {
+                if (input.startsWith("Date")) {
                     continue;
                 }
                 String[] items = input.split("\\|");
@@ -29,20 +33,45 @@ public class Ledger {
                 String description = items[2];
                 String vendor = items[3];
                 float amount = Float.parseFloat(items[4]);
-                if(amount < 0) {
+                if (amount < 0) {
                     continue;
-                }
-                else {
+                } else {
                     deposits.add(new Deposit(amount, description, vendor));
                 }
 
             }
             reader.close();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return deposits;
     }
+
+    public void addDeposit(String description, String vendor, float amount) {
+        try {
+            FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv");
+            BufferedWriter writer = new BufferedWriter(fileWriter);
+
+            String input;
+            //Gets time and date right now.
+            LocalDateTime now;
+            now = timeStamp.getTimestamp();
+            timeStamp.formatTimestamp(now);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    //Needs to be static to work? Might be because deposits is static?
+    //Todo: ***** LOOK INTO LATER *****
+    public static ArrayList<Deposit> getDeposits() {
+        return deposits;
+    }
+
     public ArrayList<Payment> loadPayments() {
         try {
             FileReader fileReader = new FileReader("src/main/resources/transactions.csv");
@@ -50,8 +79,8 @@ public class Ledger {
 
             String input;
 
-            while((input = reader.readLine()) != null) {
-                if(input.startsWith("Date")) {
+            while ((input = reader.readLine()) != null) {
+                if (input.startsWith("Date")) {
                     continue;
                 }
                 String[] items = input.split("\\|");
@@ -59,24 +88,21 @@ public class Ledger {
                 String description = items[2];
                 String vendor = items[3];
                 float amount = Float.parseFloat(items[4]);
-                if(amount > 0 ) {
+                if (amount > 0) {
                     continue;
-                }
-                else {
+                } else {
                     payments.add(new Payment(amount, description, vendor));
                 }
 
             }
             reader.close();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return payments;
     }
 
-    public static ArrayList<Deposit> getDeposits() {
-        return deposits;
-    }
+
     public static ArrayList<Payment> getPayments() {
         return payments;
     }

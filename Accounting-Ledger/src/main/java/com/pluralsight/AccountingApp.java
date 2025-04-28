@@ -8,16 +8,16 @@ public class AccountingApp {
         Menu menu = new Menu();
         Ledger ledger = new Ledger();
         ledger.loadDeposits();
-//        ledger.loadPayments();
+        ledger.loadPayments();
         String userOption = "";
         Boolean continueAnswer = true;
         System.out.println("Welcome to the account ledger app!");
 
-        while(continueAnswer) {
+        while (continueAnswer) {
             menu.displayHome();
             userOption = input.nextLine();
             char option = userOption.trim().toUpperCase().charAt(0);
-            switch(option) {
+            switch (option) {
                 case 'D':
                     menu.displayAddDeposit();
 
@@ -27,7 +27,11 @@ public class AccountingApp {
                     break;
                 case 'L':
                     menu.displayLedger();
+                    menu.displayAll();
+                    System.out.println();
                     menu.displayDeposits();
+                    System.out.println();
+                    menu.displayPayments();
                     break;
                 case 'X':
                     //Exits the program.
@@ -38,10 +42,6 @@ public class AccountingApp {
             }
         }
     }
-
-
-
-
 
 
 }

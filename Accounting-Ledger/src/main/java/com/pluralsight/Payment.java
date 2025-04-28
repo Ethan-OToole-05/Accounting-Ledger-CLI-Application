@@ -10,6 +10,7 @@ public class Payment {
         this.description = "";
         this.vendor = "";
     }
+
     public Payment(float amount, String description, String vendor) {
         this.amount = amount;
         this.description = description;
@@ -26,5 +27,10 @@ public class Payment {
 
     public String getVendor() {
         return this.vendor;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%.2f %s %s", amount, description, vendor);
     }
 }
