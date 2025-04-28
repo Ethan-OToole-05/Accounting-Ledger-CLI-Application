@@ -47,6 +47,31 @@ public class AccountingApp {
                             break;
                         case 'R':
                             menu.displayReports();
+                            int reportOption = 0;
+                            reportOption = input.nextInt();
+                            input.nextLine(); //Consuming the CRLF.
+                            switch (reportOption) {
+                                case 1:
+                                    //show month to date.
+                                    break;
+                                case 2:
+                                    //show previous month
+                                    break;
+                                case 3:
+                                    //Show year to date
+                                    break;
+                                case 4:
+                                    //show previous year
+                                    break;
+                                case 5:
+                                    //Search by Vendor
+                                    break;
+                                case 0:
+                                    //Back to report page?
+                                    break;
+                                default:
+                                    System.out.println("Invalid input. Try again");
+                            }
                             break;
                         case 'H':
                             menu.displayHome();
