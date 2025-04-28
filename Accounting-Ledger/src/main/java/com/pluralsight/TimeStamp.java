@@ -18,7 +18,7 @@ public class TimeStamp {
     public String formatTimestamp(LocalDateTime stamp) {
         LocalDateTime timestamp = stamp;
 
-        String formattedTimestamp = timestamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String formattedTimestamp = timestamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss"));
 
         return formattedTimestamp;
     }

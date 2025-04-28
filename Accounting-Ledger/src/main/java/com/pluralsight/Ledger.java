@@ -25,7 +25,7 @@ public class Ledger {
             String input;
 
             while ((input = reader.readLine()) != null) {
-                if (input.startsWith("Date")) {
+                if (input.startsWith("Date") || input.startsWith("date")) {
                     continue;
                 }
                 String[] items = input.split("\\|");
@@ -47,23 +47,40 @@ public class Ledger {
         return deposits;
     }
 
-    public void addDeposit(String description, String vendor, float amount) {
+    public static void addDeposit(String description, String vendor, float amount) {
         try {
-            FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv");
+            FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
             BufferedWriter writer = new BufferedWriter(fileWriter);
 
-            String input;
             //Gets time and date right now.
             LocalDateTime now;
             now = timeStamp.getTimestamp();
-            timeStamp.formatTimestamp(now);
+            String formattedTime = timeStamp.formatTimestamp(now);
 
+            writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
+            writer.newLine();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addPayment(String description, String vendor, float amount) {
+        try {
+            FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
+            BufferedWriter writer = new BufferedWriter(fileWriter);
+
+            LocalDateTime now;
+            now = timeStamp.getTimestamp();
+            String formattedTime = timeStamp.formatTimestamp(now);
+
+            writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
+            writer.newLine();
+            writer.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     //Needs to be static to work? Might be because deposits is static?
@@ -80,7 +97,7 @@ public class Ledger {
             String input;
 
             while ((input = reader.readLine()) != null) {
-                if (input.startsWith("Date")) {
+                if ((input.startsWith("Date") || input.startsWith("date"))) {
                     continue;
                 }
                 String[] items = input.split("\\|");

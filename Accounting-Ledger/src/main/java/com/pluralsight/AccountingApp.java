@@ -20,10 +20,11 @@ public class AccountingApp {
             switch (option) {
                 case 'D':
                     menu.displayAddDeposit();
-
+                    Ledger.addDeposit("testDescription", "testVendor", 18.99f);
                     break;
                 case 'P':
                     menu.displayMakePayment();
+                    Ledger.addPayment("testDescriptionPayment", "testPaymentVendor", -19.99f);
                     break;
                 case 'L':
                     menu.displayLedger();
