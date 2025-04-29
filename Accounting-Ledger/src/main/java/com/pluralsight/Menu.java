@@ -91,6 +91,7 @@ public class Menu {
         System.out.println("3) Year To Date ");
         System.out.println("4) Previous Year ");
         System.out.println("5) Search by Vendor ");
+        System.out.println("6) Custom Search");
         System.out.println("0) Back to Ledger Page");
         System.out.print("Option Selection: ");
         //Takes the users input.
