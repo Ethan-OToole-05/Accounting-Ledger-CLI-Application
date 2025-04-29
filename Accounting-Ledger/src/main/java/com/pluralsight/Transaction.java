@@ -20,8 +20,10 @@ public class Transaction {
         this.description = "";
         this.vendor = "";
     }
-    //When adding a new transaction Timestamp class will make a stamp of the current time.
+    //When adding a new transaction take in amount, description, vendor, and current date and time.
     public Transaction(Float amount, String description, String vendor) {
+        this.date = LocalDate.now();
+        this.time = LocalTime.now();
         this.amount = amount;
         this.description = description;
         this.vendor = vendor;

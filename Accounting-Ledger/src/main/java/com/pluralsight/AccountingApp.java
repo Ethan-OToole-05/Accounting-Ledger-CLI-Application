@@ -7,7 +7,7 @@ public class AccountingApp {
         Scanner input = new Scanner(System.in);
         Menu menu = new Menu();
         Ledger ledger = new Ledger();
-
+        ledger.loadTransactions();
 //        ledger.loadDeposits();
 //        ledger.loadPayments();
         String userOption = "";
@@ -15,7 +15,7 @@ public class AccountingApp {
         System.out.println("Welcome to the account ledger app!");
 
         while (continueAnswer) {
-            ledger.loadTransactions();
+
             menu.displayHome();
             userOption = input.nextLine();
             char option = userOption.trim().toUpperCase().charAt(0);

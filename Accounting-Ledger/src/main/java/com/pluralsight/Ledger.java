@@ -49,8 +49,8 @@ public class Ledger {
 
     public static void addDeposit(String description, String vendor, float amount) {
         try {
-            if (amount < 0) {
-                System.out.println("Invalid Input. Please make sure amount is positive for adding a deposit.");
+            if (amount < 0 || description.isEmpty() || vendor.isEmpty()) {
+                System.out.println("Invalid Input. Please try again.");
             } else {
                 FileWriter fileWriter = new FileWriter(fileName, true);
                 BufferedWriter writer = new BufferedWriter(fileWriter);
@@ -93,8 +93,8 @@ public class Ledger {
 
     public static void addPayment(String description, String vendor, float amount) {
         try {
-            if (amount > 0) {
-                System.out.println("Invalid input. Please make sure that amount is negative to represent payments.");
+            if (amount > 0 || description.isEmpty() || vendor.isEmpty()) {
+                System.out.println("Invalid input. Please try again.");
             } else {
                 FileWriter fileWriter = new FileWriter(fileName, true);
                 BufferedWriter writer = new BufferedWriter(fileWriter);
