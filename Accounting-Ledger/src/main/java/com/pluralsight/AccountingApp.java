@@ -21,11 +21,16 @@ public class AccountingApp {
             char option = userOption.trim().toUpperCase().charAt(0);
             switch (option) {
                 case 'D':
+
+                    //TODO: ***** NEEDS BETTER ERROR HANDLING USER CAN INPUT ANYTHING AT THIS MOMENT *****
                     menu.displayAddDeposit();
                     String depositInput = input.nextLine();
-                    String[] depositItems = depositInput.split(":");
-                    Ledger.addDeposit(depositItems[0], depositItems[1], Float.parseFloat(depositItems[2]));
-//
+                    if (depositInput.isEmpty() || depositInput.equals("")) {
+                        System.out.println("Invalid input. Please try again.");
+                    } else {
+                        String[] depositItems = depositInput.split(":");
+                        Ledger.addDeposit(depositItems[0], depositItems[1], Float.parseFloat(depositItems[2]));
+                    }
                     break;
                 case 'P':
                     menu.displayMakePayment();
@@ -55,18 +60,24 @@ public class AccountingApp {
                             switch (reportOption) {
                                 case 1:
                                     //show month to date.
+                                    Ledger.monthToDate();
                                     break;
                                 case 2:
                                     //show previous month
+                                    Ledger.previousMonthToDate();
                                     break;
                                 case 3:
                                     //Show year to date
+                                    Ledger.yearToDate();
                                     break;
                                 case 4:
                                     //show previous year
+                                    Ledger.previousYearToDate();
                                     break;
                                 case 5:
                                     //Search by Vendor
+                                    String vendor = "test";
+                                    Ledger.searchByVendor(vendor);
                                     break;
                                 case 0:
                                     //Back to report page?

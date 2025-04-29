@@ -20,6 +20,7 @@ public class Transaction {
         this.description = "";
         this.vendor = "";
     }
+
     //When adding a new transaction take in amount, description, vendor, and current date and time.
     public Transaction(Float amount, String description, String vendor) {
         this.date = LocalDate.now();
@@ -28,6 +29,7 @@ public class Transaction {
         this.description = description;
         this.vendor = vendor;
     }
+
     //When reading from a transaction file.
     public Transaction(LocalDate date, LocalTime time, Float amount, String description, String vendor) {
         this.date = date;
@@ -50,11 +52,11 @@ public class Transaction {
     }
 
     public LocalDate getDate() {
-        return date;
+        return this.date;
     }
 
     public LocalTime getTime() {
-        return time;
+        return this.time;
     }
 
     //Override toString to print out the entire transaction.

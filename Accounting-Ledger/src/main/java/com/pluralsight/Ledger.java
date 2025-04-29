@@ -2,14 +2,9 @@ package com.pluralsight;
 
 import java.io.*;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 public class Ledger {
     private static ArrayList<Transaction> transactions = new ArrayList<>();
@@ -44,6 +39,7 @@ public class Ledger {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Collections.sort(transactions, Comparator.comparing(Transaction::getDate));
         return transactions;
     }
 
@@ -70,8 +66,9 @@ public class Ledger {
             e.printStackTrace();
         }
     }
+
     public static void getTransactions() {
-        for(Transaction transaction : transactions) {
+        for (Transaction transaction : transactions) {
             System.out.println(transaction);
         }
     }
@@ -80,11 +77,10 @@ public class Ledger {
     //Needs to be static to work? Might be because deposits is static?
     //Todo: ***** LOOK INTO LATER *****
     public static void getDeposits() {
-        for(Transaction transaction : transactions) {
-            if(transaction.getAmount() < 0 ) {
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() < 0) {
                 continue;
-            }
-            else {
+            } else {
                 System.out.println(transaction);
             }
         }
@@ -116,30 +112,60 @@ public class Ledger {
 
 
     public static void getPayments() {
-        for(Transaction transaction : transactions) {
-            if(transaction.getAmount() > 0 ) {
+
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() > 0) {
                 continue;
-            }
-            else {
+            } else {
                 System.out.println(transaction);
             }
         }
     }
 
-    /*public static ArrayList monthToDate() {
+    public static void monthToDate() {
         Month month = LocalDate.now().getMonth();
-
-        try {
-            FileReader fileReader = new FileReader(fileName);
-            BufferedReader reader = new BufferedReader(fileReader);
-
-            String input;
-
-            while((input = reader.readLine()) != null){
-                if(input.)
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getMonth().equals(month)) {
+                System.out.println(transaction);
+            }
         }
-    }*/
+    }
 
+    public static void previousMonthToDate() {
+        Month month = LocalDate.now().getMonth().minus(1);
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getMonth().equals(month)) {
+                System.out.println(transaction);
+            }
+        }
+    }
+
+    public static void yearToDate() {
+        int year = LocalDate.now().getYear();
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getYear() == year) {
+                System.out.println(transaction);
+            }
+        }
+    }
+
+    public static void previousYearToDate() {
+        int previousYear = LocalDate.now().getYear();
+        previousYear--;
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate().getYear() == previousYear) {
+                System.out.println(transaction);
+            }
+        }
+    }
+
+    public static void searchByVendor(String vendor) {
+        String searchVendor = vendor;
+
+        for (Transaction transaction : transactions) {
+            if (transaction.getVendor().equals(searchVendor)) {
+                System.out.println(transaction);
+            }
+        }
+    }
 }
