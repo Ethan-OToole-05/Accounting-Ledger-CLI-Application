@@ -104,4 +104,13 @@ public class Menu {
         //Takes the users input.
     }
 
+    public void displayMonthToDate() {
+        System.out.println("These are the current reports from the beginning of the month to now: ");
+        System.out.println("Heres the deposits: ");
+        for (Deposit deposit : Ledger.getDeposits()){
+            //need display month method.
+            System.out.println(deposit);
+        }
+    }
+
 }

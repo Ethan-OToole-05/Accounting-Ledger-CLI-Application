@@ -4,6 +4,7 @@ import java.io.*;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -12,6 +13,7 @@ public class Ledger {
     private static ArrayList<Deposit> deposits = new ArrayList<>();
     private static ArrayList<Payment> payments = new ArrayList<>();
     private static TimeStamp timeStamp = new TimeStamp();
+    private static String fileName = "src/main/resources/transactions.csv";
 
     public Ledger() {
 
@@ -19,7 +21,7 @@ public class Ledger {
 
     public ArrayList<Deposit> loadDeposits() {
         try {
-            FileReader fileReader = new FileReader("src/main/resources/transactions.csv");
+            FileReader fileReader = new FileReader(fileName);
             BufferedReader reader = new BufferedReader(fileReader);
 
             String input;
@@ -52,7 +54,7 @@ public class Ledger {
             if (amount < 0) {
                 System.out.println("Invalid Input. Please make sure amount is positive for adding a deposit.");
             } else {
-                FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
+                FileWriter fileWriter = new FileWriter(fileName, true);
                 BufferedWriter writer = new BufferedWriter(fileWriter);
 
                 //Gets time and date right now.
@@ -80,7 +82,7 @@ public class Ledger {
 
     public ArrayList<Payment> loadPayments() {
         try {
-            FileReader fileReader = new FileReader("src/main/resources/transactions.csv");
+            FileReader fileReader = new FileReader(fileName);
             BufferedReader reader = new BufferedReader(fileReader);
 
             String input;
@@ -113,7 +115,7 @@ public class Ledger {
             if (amount > 0) {
                 System.out.println("Invalid input. Please make sure that amount is negative to represent payments.");
             } else {
-                FileWriter fileWriter = new FileWriter("src/main/resources/transactions.csv", true);
+                FileWriter fileWriter = new FileWriter(fileName, true);
                 BufferedWriter writer = new BufferedWriter(fileWriter);
 
                 LocalDateTime now;
@@ -134,6 +136,22 @@ public class Ledger {
 
     public static ArrayList<Payment> getPayments() {
         return payments;
+    }
+
+    public static ArrayList monthToDate() {
+        Month month = LocalDate.now().getMonth();
+
+        try {
+            FileReader fileReader = new FileReader(fileName);
+            BufferedReader reader = new BufferedReader(fileReader);
+
+            String input;
+
+            while((input = reader.readLine()) != null){
+                if(input.)
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
