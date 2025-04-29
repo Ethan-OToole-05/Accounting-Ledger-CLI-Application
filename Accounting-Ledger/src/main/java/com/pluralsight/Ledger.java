@@ -37,11 +37,7 @@ public class Ledger {
                 String description = items[2];
                 String vendor = items[3];
                 float amount = Float.parseFloat(items[4]);
-//                if (amount < 0) {
-//                    continue;
-//                } else {
-                    transactions.add(new Transaction(date, time, amount, description, vendor));
-//                }
+                transactions.add(new Transaction(date, time, amount, description, vendor));
 
             }
             reader.close();

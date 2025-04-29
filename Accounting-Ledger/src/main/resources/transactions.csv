@@ -1,3 +1,7 @@
 date|time|description|vendor|amount
 2023-04-15|10:13:25|ergonomic keyboard|Amazon|-89.50
 2023-04-15|11:15:00|Invoice 1001 paid|Joe|1500.00
+2025-04-29|10:06:06|testDesciption|TestVendor|19.99
+2025-04-29|10:09:15|testDescription|TestVendor|19.89
+2025-04-29|10:10:45|test|test|14.99
+2025-04-29|10:12:38|test|test|1.91490918E9
