@@ -4,14 +4,15 @@ import java.io.*;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 public class Ledger {
-    private static ArrayList<Deposit> deposits = new ArrayList<>();
-    private static ArrayList<Payment> payments = new ArrayList<>();
+    private static ArrayList<Transaction> transactions = new ArrayList<>();
     private static TimeStamp timeStamp = new TimeStamp();
     private static String fileName = "src/main/resources/transactions.csv";
 
@@ -19,7 +20,7 @@ public class Ledger {
 
     }
 
-    public ArrayList<Deposit> loadDeposits() {
+    public ArrayList<Transaction> loadTransactions() {
         try {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader reader = new BufferedReader(fileReader);
@@ -31,22 +32,23 @@ public class Ledger {
                     continue;
                 }
                 String[] items = input.split("\\|");
-                //ADDRESS DATE AND TIME ON ITEMS[0] AND ITEMS[1].
+                LocalDate date = LocalDate.parse(items[0], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                LocalTime time = LocalTime.parse(items[1], DateTimeFormatter.ofPattern("HH:mm:ss"));
                 String description = items[2];
                 String vendor = items[3];
                 float amount = Float.parseFloat(items[4]);
-                if (amount < 0) {
-                    continue;
-                } else {
-                    deposits.add(new Deposit(amount, description, vendor));
-                }
+//                if (amount < 0) {
+//                    continue;
+//                } else {
+                    transactions.add(new Transaction(date, time, amount, description, vendor));
+//                }
 
             }
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return deposits;
+        return transactions;
     }
 
     public static void addDeposit(String description, String vendor, float amount) {
@@ -65,50 +67,33 @@ public class Ledger {
                 writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
                 writer.newLine();
                 writer.close();
-                deposits.add(new Deposit(amount, description, vendor));
+                transactions.add(new Transaction(amount, description, vendor));
             }
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public static void getTransactions() {
+        for(Transaction transaction : transactions) {
+            System.out.println(transaction);
         }
     }
 
 
     //Needs to be static to work? Might be because deposits is static?
     //Todo: ***** LOOK INTO LATER *****
-    public static ArrayList<Deposit> getDeposits() {
-        return deposits;
-    }
-
-    public ArrayList<Payment> loadPayments() {
-        try {
-            FileReader fileReader = new FileReader(fileName);
-            BufferedReader reader = new BufferedReader(fileReader);
-
-            String input;
-
-            while ((input = reader.readLine()) != null) {
-                if ((input.startsWith("Date") || input.startsWith("date"))) {
-                    continue;
-                }
-                String[] items = input.split("\\|");
-                //ADDRESS DATE AND TIME ON ITEMS[0] AND ITEMS[1].
-                String description = items[2];
-                String vendor = items[3];
-                float amount = Float.parseFloat(items[4]);
-                if (amount > 0) {
-                    continue;
-                } else {
-                    payments.add(new Payment(amount, description, vendor));
-                }
-
+    public static void getDeposits() {
+        for(Transaction transaction : transactions) {
+            if(transaction.getAmount() < 0 ) {
+                continue;
             }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            else {
+                System.out.println(transaction);
+            }
         }
-        return payments;
     }
+
 
     public static void addPayment(String description, String vendor, float amount) {
         try {
@@ -125,7 +110,7 @@ public class Ledger {
                 writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
                 writer.newLine();
                 writer.close();
-                payments.add(new Payment(amount, description, vendor));
+                transactions.add(new Transaction(amount, description, vendor));
             }
 
         } catch (IOException e) {
@@ -134,11 +119,18 @@ public class Ledger {
     }
 
 
-    public static ArrayList<Payment> getPayments() {
-        return payments;
+    public static void getPayments() {
+        for(Transaction transaction : transactions) {
+            if(transaction.getAmount() > 0 ) {
+                continue;
+            }
+            else {
+                System.out.println(transaction);
+            }
+        }
     }
 
-    public static ArrayList monthToDate() {
+    /*public static ArrayList monthToDate() {
         Month month = LocalDate.now().getMonth();
 
         try {
@@ -152,6 +144,6 @@ public class Ledger {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 }
