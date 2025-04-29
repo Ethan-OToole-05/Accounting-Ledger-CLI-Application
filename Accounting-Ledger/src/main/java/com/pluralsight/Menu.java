@@ -95,13 +95,25 @@ public class Menu {
         //Takes the users input.
     }
 
-//    public void displayMonthToDate() {
-//        System.out.println("These are the current reports from the beginning of the month to now: ");
-//        System.out.println("Heres the deposits: ");
-//        for (Deposit deposit : Ledger.getDeposits()){
-//            //need display month method.
-//            System.out.println(deposit);
-//        }
-//    }
+    public void displayMonthToDate() {
+        System.out.println("These are the current reports from the beginning of the month to now: ");
+        Ledger.monthToDate();
+    }
+    public void displayPreviousMonthToDate() {
+        System.out.println("These are the current reports from the previous month to now: ");
+        Ledger.previousMonthToDate();
+    }
+    public void displayYearToDate() {
+        System.out.println("These are the currenr reports from the beginning of the year to now: ");
+        Ledger.yearToDate();
+    }
+    public void displayPreviousYearToDate() {
+        System.out.println("These are the current reports from the previous year to now: ");
+        Ledger.previousYearToDate();
+    }
+    public void displaySearchByVendor(String vendor) {
+        System.out.println("These are the current reports from the searched vendor: ");
+        Ledger.searchByVendor(vendor);
+    }
 
 }

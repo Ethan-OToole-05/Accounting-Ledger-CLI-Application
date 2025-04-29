@@ -60,24 +60,24 @@ public class AccountingApp {
                             switch (reportOption) {
                                 case 1:
                                     //show month to date.
-                                    Ledger.monthToDate();
+                                    menu.displayMonthToDate();
                                     break;
                                 case 2:
                                     //show previous month
-                                    Ledger.previousMonthToDate();
+                                    menu.displayPreviousMonthToDate();
                                     break;
                                 case 3:
                                     //Show year to date
-                                    Ledger.yearToDate();
+                                    menu.displayYearToDate();
                                     break;
                                 case 4:
                                     //show previous year
-                                    Ledger.previousYearToDate();
+                                    menu.displayPreviousYearToDate();
                                     break;
                                 case 5:
                                     //Search by Vendor
                                     String vendor = "test";
-                                    Ledger.searchByVendor(vendor);
+                                    menu.displaySearchByVendor(vendor);
                                     break;
                                 case 0:
                                     //Back to report page?
