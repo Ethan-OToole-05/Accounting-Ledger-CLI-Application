@@ -43,6 +43,7 @@ public class Menu {
         System.out.println("D) Display Deposits");
         System.out.println("P) Display Payments");
         System.out.println("R) Display Reports");
+        System.out.println("H) Back to Home Screen");
         System.out.print("Option Selection: ");
         //Takes users input
     }

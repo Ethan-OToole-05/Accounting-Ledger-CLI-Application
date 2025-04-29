@@ -163,7 +163,7 @@ public class Ledger {
         String searchVendor = vendor;
 
         for (Transaction transaction : transactions) {
-            if (transaction.getVendor().equals(searchVendor)) {
+            if (transaction.getVendor().equalsIgnoreCase(searchVendor)) {
                 System.out.println(transaction);
             }
         }
