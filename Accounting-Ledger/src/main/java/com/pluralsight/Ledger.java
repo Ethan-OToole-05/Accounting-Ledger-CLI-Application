@@ -45,7 +45,8 @@ public class Ledger {
         //TODO: *****ONLY SORTS BY DATE COULD HAVE EARLIER TIME *****.
         //Comparator to check both date and time.
         //Get datetime straight up?
-        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).reversed());
+        //Add new Transaction getDateTime somehow?
+//        Collections.sort(transactions, Comparator.comparing(Transaction::getDateTime();
         return transactions;
     }
 
@@ -176,15 +177,15 @@ public class Ledger {
     }
 
     public static void customSearch(LocalDate startDate, LocalDate endDate, String description, String vendor, Float amount) {
-        ArrayList<Transaction> results= new ArrayList<>();
+        ArrayList<Transaction> results = new ArrayList<>();
         for (Transaction transaction : transactions) {
-            if (startDate != null && transaction.getDate().isBefore(startDate)) {
-                continue;
-            }
-            //End date firsT?
             if (endDate != null && transaction.getDate().isAfter(endDate)) {
                 continue;
             }
+            if (startDate != null && transaction.getDate().isBefore(startDate)) {
+                continue;
+            }
+
             //How to keep adding on to the end result?
             if (!transaction.getDescription().equalsIgnoreCase(description)) {
                 continue;

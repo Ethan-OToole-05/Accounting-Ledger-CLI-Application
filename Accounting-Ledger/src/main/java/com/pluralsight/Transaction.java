@@ -1,6 +1,7 @@
 package com.pluralsight;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -57,6 +58,14 @@ public class Transaction {
 
     public LocalTime getTime() {
         return this.time;
+    }
+
+    public static LocalDateTime getDateTime(LocalDate date, LocalTime time){
+        LocalDateTime dateTime;
+
+        dateTime = LocalDateTime.of(date, time);
+        return dateTime;
+
     }
 
     //Override toString to print out the entire transaction.
