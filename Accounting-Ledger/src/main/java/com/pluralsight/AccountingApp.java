@@ -34,6 +34,7 @@ public class AccountingApp {
                         }
                         break;
                     case 'P':
+                        //TODO: ***** NEEDS BETTER ERROR HANDLING USER CAN INPUT ANYTHING AT THIS MOMENT *****
                         menu.displayMakePayment();
                         String paymentInput = input.nextLine();
                         String[] paymentItems = paymentInput.split(":");
@@ -80,6 +81,10 @@ public class AccountingApp {
                                         System.out.print("Please enter the name of the vendor: ");
                                         String vendor = input.nextLine().trim();
                                         menu.displaySearchByVendor(vendor);
+                                        break;
+                                    case 6:
+                                        //Custom search Challenge
+                                        menu.displayCustomSearch();
                                         break;
                                     case 0:
                                         //Back to report page?

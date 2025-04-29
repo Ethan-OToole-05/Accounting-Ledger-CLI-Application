@@ -10,12 +10,14 @@ public class Ledger {
     private static ArrayList<Transaction> transactions = new ArrayList<>();
     private static TimeStamp timeStamp = new TimeStamp();
     private static String fileName = "src/main/resources/transactions.csv";
+    private static LocalDateTime compareDateTime;
 
     public Ledger() {
 
     }
 
     public ArrayList<Transaction> loadTransactions() {
+
         try {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader reader = new BufferedReader(fileReader);
@@ -39,7 +41,9 @@ public class Ledger {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Collections.sort(transactions, Comparator.comparing(Transaction::getDate));
+
+        //TODO: *****ONLY SORTS BY DATE COULD HAVE EARLIER TIME *****.
+        Collections.sort(transactions, Comparator.comparing(Transaction::getDate).reversed());
         return transactions;
     }
 
@@ -165,6 +169,26 @@ public class Ledger {
         for (Transaction transaction : transactions) {
             if (transaction.getVendor().equalsIgnoreCase(searchVendor)) {
                 System.out.println(transaction);
+            }
+        }
+    }
+
+    public static void customSearch(LocalDate startDate, LocalDate endDate, String description, String vendor, Float amount) {
+        for (Transaction transaction : transactions) {
+            if (startDate != null) {
+                
+            }
+            if (endDate != null) {
+
+            }
+            if (description != null) {
+
+            }
+            if (vendor != null) {
+
+            }
+            if (amount != null) {
+
             }
         }
     }

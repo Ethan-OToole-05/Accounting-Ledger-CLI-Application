@@ -100,21 +100,40 @@ public class Menu {
         System.out.println("These are the current reports from the beginning of the month to now: ");
         Ledger.monthToDate();
     }
+
     public void displayPreviousMonthToDate() {
         System.out.println("These are the current reports from the previous month to now: ");
         Ledger.previousMonthToDate();
     }
+
     public void displayYearToDate() {
         System.out.println("These are the currenr reports from the beginning of the year to now: ");
         Ledger.yearToDate();
     }
+
     public void displayPreviousYearToDate() {
         System.out.println("These are the current reports from the previous year to now: ");
         Ledger.previousYearToDate();
     }
+
     public void displaySearchByVendor(String vendor) {
         System.out.println("These are the current reports from the searched vendor: ");
         Ledger.searchByVendor(vendor);
     }
 
+    public void displayCustomSearch() {
+        System.out.println("Please enter the search values you want: ");
+        System.out.print("Start Date: ");
+        //getline
+        System.out.print("End Date: ");
+        //getline
+        System.out.print("Description: ");
+        //getline
+        System.out.print("Vendor: ");
+        //getline
+        System.out.print("Amount: ");
+        //getline
+
+
+    }
 }
