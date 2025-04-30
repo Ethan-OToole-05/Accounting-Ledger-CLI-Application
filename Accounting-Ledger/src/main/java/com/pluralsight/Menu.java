@@ -134,6 +134,7 @@ public class Menu {
         //getline
         System.out.print("Amount: ");
         //getline
+        System.out.println();
 
 
     }

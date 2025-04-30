@@ -1,7 +1,6 @@
 package com.pluralsight;
 
 import java.io.*;
-import java.sql.Time;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -41,11 +40,6 @@ public class Ledger {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //TODO: *****ONLY SORTS BY DATE COULD HAVE EARLIER TIME *****.
-        //Comparator to check both date and time.
-        //Get datetime straight up?
-        //Add new Transaction getDateTime somehow?
 
         Collections.sort(transactions, Comparator.comparing(Transaction::getDateTime).reversed());
         return transactions;
@@ -179,28 +173,46 @@ public class Ledger {
     }
 
     public static void customSearch(LocalDate startDate, LocalDate endDate, String description, String vendor, Float amount) {
-        ArrayList<Transaction> results = new ArrayList<>();
-        for (Transaction transaction : transactions) {
-            if (endDate != null && transaction.getDate().isAfter(endDate)) {
-                continue;
-            }
-            if (startDate != null && transaction.getDate().isBefore(startDate)) {
-                continue;
-            }
+        //Results will hold what the user wants filtered in an array of Boolean values.
+        ArrayList<Boolean> results = new ArrayList<>(transactions.size());
 
-            //How to keep adding on to the end result?
-            if (!transaction.getDescription().equalsIgnoreCase(description)) {
-                continue;
-            }
-            if (!transaction.getVendor().equalsIgnoreCase(vendor)) {
-                continue;
-            }
-            if (amount != null && transaction.getAmount() != amount) {
-                continue;
-            }
-            System.out.println(transaction);
-//            results.add(transaction);
+        //Size up the array by seeing how many transactions we have. We are assuming everything is true first.
+        for (int i = 0; i < transactions.size(); i++) {
+            results.add(true);
         }
-//        return results;
+
+        //For loop to see which field has something in it and see if the search matches a field.
+        for (int i = 0; i < transactions.size(); i++) {
+            Transaction transaction = transactions.get(i);
+            if (endDate != null && transaction.getDate().isBefore(endDate)) {
+                results.set(i, false);
+            }
+            if (startDate != null && transaction.getDate().isAfter(startDate)) {
+                results.set(i, false);
+            }
+            //How to keep adding on to the end result?
+            if (description != null && !transaction.getDescription().equalsIgnoreCase(description)) {
+                results.set(i, false);
+            }
+            if (vendor != null && !transaction.getVendor().equalsIgnoreCase(vendor)) {
+                results.set(i, false);
+            }
+            if (amount != null && transaction.getAmount() != amount && transaction.getAmount() < amount) {
+                results.set(i, false);
+            }
+        }
+        //Print out the results of each transaction that matched the filtered results.
+        for (int i = 0; i < transactions.size(); i++) {
+            if (results.get(i)) {
+                System.out.println(transactions.get(i));
+            }
+        }
+//            System.out.println(transaction);
+//            results.add(transaction);
+//        System.out.println(filteredResults);
+
     }
+
+//        return results;
 }
+

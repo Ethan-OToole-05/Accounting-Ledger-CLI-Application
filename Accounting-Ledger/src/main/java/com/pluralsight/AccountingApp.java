@@ -86,7 +86,7 @@ public class AccountingApp {
                                     case 6:
                                         //Custom search Challenge
                                         menu.displayCustomSearch();
-                                        Ledger.customSearch(LocalDate.parse("2024-04-25"), LocalDate.parse("2025-06-24"), "Test", "test", 19.99f);
+                                        Ledger.customSearch(null, null, null, null, 19.99f);
                                         break;
                                     case 0:
                                         //Back to report page?
