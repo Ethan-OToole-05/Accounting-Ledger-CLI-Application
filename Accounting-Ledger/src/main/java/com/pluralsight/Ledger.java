@@ -46,7 +46,8 @@ public class Ledger {
         //Comparator to check both date and time.
         //Get datetime straight up?
         //Add new Transaction getDateTime somehow?
-//        Collections.sort(transactions, Comparator.comparing(Transaction::getDateTime();
+
+        Collections.sort(transactions, Comparator.comparing(Transaction::getDateTime).reversed());
         return transactions;
     }
 
@@ -84,6 +85,7 @@ public class Ledger {
     //Needs to be static to work? Might be because deposits is static?
     //Todo: ***** LOOK INTO LATER *****
     public static void getDeposits() {
+        Collections.sort(transactions, Comparator.comparing(Transaction::getDateTime).reversed());
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() < 0) {
                 continue;
@@ -119,7 +121,7 @@ public class Ledger {
 
 
     public static void getPayments() {
-
+        Collections.sort(transactions, Comparator.comparing(Transaction::getDateTime).reversed());
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() > 0) {
                 continue;

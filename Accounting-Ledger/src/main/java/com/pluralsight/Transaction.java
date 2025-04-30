@@ -60,10 +60,10 @@ public class Transaction {
         return this.time;
     }
 
-    public static LocalDateTime getDateTime(LocalDate date, LocalTime time){
+    public LocalDateTime getDateTime(){
         LocalDateTime dateTime;
 
-        dateTime = LocalDateTime.of(date, time);
+        dateTime = LocalDateTime.of(this.getDate(), this.time);
         return dateTime;
 
     }

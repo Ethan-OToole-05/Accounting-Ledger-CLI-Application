@@ -9,3 +9,6 @@ date|time|description|vendor|amount
 2025-04-29|10:18:09|test|testVendor|-15.99
 2025-04-29|11:43:05|test|testVendor|19.77
 2025-04-29|13:03:18|test|tesT|19.99
+2025-04-30|10:25:10|test|test|18.88
+2025-04-30|10:42:54|test|test|100000.0
+2025-04-30|10:43:59|test|test|7890.0
