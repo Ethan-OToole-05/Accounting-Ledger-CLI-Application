@@ -51,19 +51,13 @@ public class Menu {
     public void displayAddDeposit() {
         System.out.println();
         System.out.println("Please enter deposit information below.");
-        System.out.println("Format is description:vendor:amount ");
-        String input = "";
-
-        System.out.print("Deposit Input: ");
-        //Takes user input
+        //Takes user input after.
     }
 
     public void displayMakePayment() {
         System.out.println();
         System.out.println("Please enter the payment information below. ");
-        System.out.println("Format is description:vendor:amount ");
-        System.out.print("Payment Input: ");
-        //Takes the users input.
+        //Takes the users input after.
     }
 
     public void displayDeposits() {
