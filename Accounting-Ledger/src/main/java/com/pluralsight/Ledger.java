@@ -192,23 +192,32 @@ public class Ledger {
 
         //For loop to see which field has something in it and see if the search matches a field.
         for (int i = 0; i < transactions.size(); i++) {
+            boolean meetsSearch = true;
             Transaction transaction = transactions.get(i);
             if (endDate != null && transaction.getDate().isAfter(endDate)) {
-                results.set(i, false);
-            } else if (startDate != null && transaction.getDate().isBefore(startDate)) {
-                results.set(i, false);
+                meetsSearch = false;
+            }
+            if (startDate != null && transaction.getDate().isBefore(startDate)) {
+                meetsSearch = false;
             }
             //How to keep adding on to the end result?
             //Still need to keep checking somehow description search is empty we should just move on.
-            else if (description != null && !transaction.getDescription().equalsIgnoreCase(description)) {
-                results.set(i, false);
-            } else if (vendor != null && !transaction.getVendor().equalsIgnoreCase(vendor)) {
-                results.set(i, false);
+            if (!description.isEmpty() && !transaction.getDescription().equalsIgnoreCase(description)) {
+                meetsSearch = false;
+            }
+            if (!vendor.isEmpty() && !transaction.getVendor().equalsIgnoreCase(vendor)) {
+                meetsSearch = false;
             }
             //TODO: ***** What is amount? Every number before the input amount? Does it include payments? *****
-            else if (amount != null && transaction.getAmount() != amount && transaction.getAmount() < amount) {
+            if (amount != null && transaction.getAmount() < amount) {
+                //Different toggle for amounts.
+                meetsSearch = false;
+            }
+            if(!meetsSearch) {
                 results.set(i, false);
             }
+            //Have a boolean flag to toggle.
+            //Different toggle for amounts.
         }
         //Print out the results of each transaction that matched the filtered results.
         for (int i = 0; i < transactions.size(); i++) {
