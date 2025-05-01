@@ -95,7 +95,7 @@ public class Menu {
     }
 
     public void displayPreviousYearToDate() {
-        System.out.println("These are the current reports from the previous year to now: ");
+        System.out.println("These are the current reports from the previous year: ");
         Ledger.previousYearToDate();
         //Displays all transactions from the previous year to date.
     }

@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.nio.channels.ScatteringByteChannel;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -21,12 +22,9 @@ public class AccountingApp {
                 System.out.println("Invalid input try again please.");
             } else {
                 char option = userOption.trim().toUpperCase().charAt(0);
-
                 switch (option) {
                     case 'D':
                         try {
-                            //TODO: ***** NEEDS BETTER ERROR HANDLING USER CAN INPUT ANYTHING AT THIS MOMENT *****
-                            //Error handling done??????
                             menu.displayAddDeposit();
                             System.out.print("Description: ");
                             String descriptionDepositInput = input.nextLine();
@@ -52,7 +50,6 @@ public class AccountingApp {
                         break;
                     case 'P':
                         try {
-                            //TODO: ***** Should we always make amount negative? *****
                             menu.displayMakePayment();
                             System.out.print("Description: ");
                             String descriptionPaymentInput = input.nextLine();
@@ -77,9 +74,13 @@ public class AccountingApp {
                         }
                         break;
                     case 'L':
-                        menu.displayLedger();
-                        userOption = input.nextLine();
-                        option = userOption.trim().toUpperCase().charAt(0);
+                        try {
+                            menu.displayLedger();
+                            userOption = input.nextLine();
+                            option = userOption.trim().toUpperCase().charAt(0);
+                        } catch (Exception e) {
+                            System.out.println("Invalid input. Please try again.");
+                        }
                         switch (option) {
                             case 'A':
                                 menu.displayAll();
@@ -115,7 +116,6 @@ public class AccountingApp {
                                     case 5:
                                         try {
                                             //Search by Vendor
-                                            //TODO: BETTER ERROR HANDLING WITH THE STRING INPUT.
                                             System.out.print("Please enter the name of the vendor: ");
                                             String vendor = input.nextLine().trim();
                                             menu.displaySearchByVendor(vendor);
@@ -136,12 +136,11 @@ public class AccountingApp {
                                             String description = input.nextLine();
                                             System.out.print("Vendor: ");
                                             String vendor = input.nextLine();
-                                            System.out.print("Amount: ");
+                                            System.out.print("Amount to search up to (Ex: all transactions up to 20.00): ");
                                             String amount = input.nextLine();
 
                                             LocalDate inputStartDate = LocalDate.parse(startDate);
                                             LocalDate inputEndDate = LocalDate.parse(endDate);
-                                            //TODO: **** ALLOW FOR NULL VALUE ****
                                             Float inputAmount = null;
                                             if (!amount.isEmpty()) {
                                                 inputAmount = Float.parseFloat(amount);
@@ -154,7 +153,6 @@ public class AccountingApp {
                                         }
                                         break;
                                     case 0:
-                                        //Back to report page?
                                         break;
                                     default:
                                         System.out.println("Invalid input. Try again.");
