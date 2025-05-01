@@ -173,6 +173,7 @@ public class Ledger {
     public static void searchByVendor(String vendor) {
         String searchVendor = vendor;
 
+        //What is display if we can't find the vendor?
         for (Transaction transaction : transactions) {
             if (transaction.getVendor().equalsIgnoreCase(searchVendor)) {
                 System.out.println(transaction);
@@ -199,9 +200,9 @@ public class Ledger {
             }
             //How to keep adding on to the end result?
             //Still need to keep checking somehow description search is empty we should just move on.
-            else if (description != null && transaction.getDescription().equalsIgnoreCase(description)) {
+            else if (description != null && !transaction.getDescription().equalsIgnoreCase(description)) {
                 results.set(i, false);
-            } else if (vendor != null && transaction.getVendor().equalsIgnoreCase(vendor)) {
+            } else if (vendor != null && !transaction.getVendor().equalsIgnoreCase(vendor)) {
                 results.set(i, false);
             }
             //TODO: ***** What is amount? Every number before the input amount? Does it include payments? *****

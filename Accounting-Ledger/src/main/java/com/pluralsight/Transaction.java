@@ -60,7 +60,7 @@ public class Transaction {
         return this.time;
     }
 
-    public LocalDateTime getDateTime(){
+    public LocalDateTime getDateTime() {
         LocalDateTime dateTime;
 
         dateTime = LocalDateTime.of(this.getDate(), this.time);
@@ -71,6 +71,6 @@ public class Transaction {
     //Override toString to print out the entire transaction.
     @Override
     public String toString() {
-        return String.format("%s|%s|%s|%s|%.2f", date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), time.format(DateTimeFormatter.ofPattern("HH:mm:ss")), description, vendor, amount);
+        return String.format("Date : %s | Time: %s | Description: %s | Vendor: %s | Amount: %.2f", date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), time.format(DateTimeFormatter.ofPattern("HH:mm:ss")), description, vendor, amount);
     }
 }
