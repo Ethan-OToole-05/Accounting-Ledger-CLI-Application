@@ -47,7 +47,12 @@ public class Ledger {
 
     public static void addDeposit(String description, String vendor, float amount) {
         try {
-            if (amount < 0 || description.isEmpty() || vendor.isEmpty()) {
+            //If amount is negative we will make it positive regardless.
+            if (amount < 0) {
+                amount = Math.abs(amount);
+            }
+            //If description or vendor fields are empty we will not accept input.
+            if (description.isEmpty() || vendor.isEmpty()) {
                 System.out.println("Invalid Input. Please try again.");
             } else {
                 FileWriter fileWriter = new FileWriter(fileName, true);
@@ -72,14 +77,9 @@ public class Ledger {
 
     //TODO: ****** ADJUST TO SHOW HERE ARE THE DEPOSITS: AND HERE ARE THE PAYMENTS:*******
     public static void getTransactions() {
-        for (Transaction transaction : transactions) {
-            System.out.println(transaction);
-        }
+
     }
 
-
-    //Needs to be static to work? Might be because deposits is static?
-    //Todo: ***** LOOK INTO LATER *****
     public static void getDeposits() {
         Collections.sort(transactions, Comparator.comparing(Transaction::getDateTime).reversed());
         for (Transaction transaction : transactions) {
@@ -92,9 +92,15 @@ public class Ledger {
     }
 
 
+    //Always make payment amount negative if userinput is positive? Instead of saying invalid input?
     public static void addPayment(String description, String vendor, float amount) {
         try {
-            if (amount > 0 || description.isEmpty() || vendor.isEmpty()) {
+            //If amount is positive we will make negative for payments.
+            if (amount > 0) {
+                amount = -Math.abs(amount);
+            }
+            //If description or vendor fields are empty we will not accept input.
+            if (description.isEmpty() || vendor.isEmpty()) {
                 System.out.println("Invalid input. Please try again.");
             } else {
                 FileWriter fileWriter = new FileWriter(fileName, true);
@@ -188,22 +194,17 @@ public class Ledger {
             Transaction transaction = transactions.get(i);
             if (endDate != null && transaction.getDate().isAfter(endDate)) {
                 results.set(i, false);
-                continue;
-            }
-            else if (startDate != null && transaction.getDate().isBefore(startDate)) {
+            } else if (startDate != null && transaction.getDate().isBefore(startDate)) {
                 results.set(i, false);
-                continue;
             }
             //How to keep adding on to the end result?
             //Still need to keep checking somehow description search is empty we should just move on.
             else if (description != null && transaction.getDescription().equalsIgnoreCase(description)) {
                 results.set(i, false);
-                continue;
-            }
-            else if (vendor != null && transaction.getVendor().equalsIgnoreCase(vendor)) {
+            } else if (vendor != null && transaction.getVendor().equalsIgnoreCase(vendor)) {
                 results.set(i, false);
-                continue;
             }
+            //TODO: ***** What is amount? Every number before the input amount? Does it include payments? *****
             else if (amount != null && transaction.getAmount() != amount && transaction.getAmount() < amount) {
                 results.set(i, false);
             }

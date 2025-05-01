@@ -2,7 +2,6 @@ package com.pluralsight;
 
 import java.time.LocalDate;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 public class AccountingApp {
     public static void main(String[] args) {
@@ -53,7 +52,7 @@ public class AccountingApp {
                         break;
                     case 'P':
                         try {
-                            //TODO: ***** NEEDS BETTER ERROR HANDLING USER CAN INPUT ANYTHING AT THIS MOMENT *****
+                            //TODO: ***** Should we always make amount negative? *****
                             menu.displayMakePayment();
                             System.out.print("Description: ");
                             String descriptionPaymentInput = input.nextLine();
@@ -156,16 +155,18 @@ public class AccountingApp {
                                         break;
                                     case 0:
                                         //Back to report page?
+                                        break;
                                     default:
                                         System.out.println("Invalid input. Try again.");
                                 }
                             case 'H':
                                 break;
                         }
-//                        break;
+                        break;
                     case 'X':
                         //Exits the program.
                         System.out.println("Thank you for using the app!");
+                        input.close();
                         System.exit(0);
                     default:
                         System.out.println("Invalid input. Please try again. ");

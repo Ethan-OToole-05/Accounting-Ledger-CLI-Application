@@ -1,10 +1,6 @@
 package com.pluralsight;
 
-
-import java.util.Scanner;
-
 public class Menu {
-    private static Scanner scanner;
 
     public void displayHome() {
         System.out.println();
@@ -14,27 +10,7 @@ public class Menu {
         System.out.println("L) Ledger");
         System.out.println("X) Exit");
         System.out.print("Option Selection: ");
-        //Code below has an error taking in null on line 19.
-//        String stringOption = "";
-//        stringOption = scanner.nextLine();
-//        char option = stringOption.trim().toUpperCase().charAt(0);
-//        switch (option) {
-//            case 'D':
-//                displayAddDeposit();
-//                break;
-//            case 'P':
-//                displayMakePayment();
-//                break;
-//            case 'L':
-//                displayLedger();
-//                break;
-//            case 'X':
-//                System.out.println("Thank you for using the app!");
-//                System.exit(0);
-//            default:
-//                System.out.println("Invalid input please try again.");
-//
-//        }
+        //Takes user input
     }
 
     public void displayLedger() {
@@ -62,18 +38,27 @@ public class Menu {
 
     public void displayDeposits() {
         System.out.println("Here are all deposits: ");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         Ledger.getDeposits();
-
+        //Displays each deposit.
     }
 
     public void displayPayments() {
         System.out.println("Here are all the payments: ");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         Ledger.getPayments();
+        //Displays each payment.
     }
 
     public void displayAll() {
         System.out.println("Here are all transactions: ");
-        Ledger.getTransactions();
+        System.out.println("Deposits: ");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        Ledger.getDeposits();
+        System.out.println("Payments: ");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        Ledger.getPayments();
+        //Displays all transactions.
     }
 
 
@@ -94,30 +79,36 @@ public class Menu {
     public void displayMonthToDate() {
         System.out.println("These are the current reports from the beginning of the month to now: ");
         Ledger.monthToDate();
+        //Displays all transactions month to date.
     }
 
     public void displayPreviousMonthToDate() {
         System.out.println("These are the current reports from the previous month to now: ");
         Ledger.previousMonthToDate();
+        //Displays all transactions from the previous month to date.
     }
 
     public void displayYearToDate() {
         System.out.println("These are the currenr reports from the beginning of the year to now: ");
         Ledger.yearToDate();
+        //Displays all transactions from the current year to date.
     }
 
     public void displayPreviousYearToDate() {
         System.out.println("These are the current reports from the previous year to now: ");
         Ledger.previousYearToDate();
+        //Displays all transactions from the previous year to date.
     }
 
     public void displaySearchByVendor(String vendor) {
         System.out.println("These are the current reports from the searched vendor: ");
         Ledger.searchByVendor(vendor);
+        //Displays all transactions based on vendor.
     }
 
     public void displayCustomSearch() {
         System.out.println("Please enter the search values you want: ");
         System.out.println();
+        //Displays all transactions based on user search inputs.
     }
 }
