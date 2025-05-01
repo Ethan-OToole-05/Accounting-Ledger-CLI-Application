@@ -69,6 +69,8 @@ public class Ledger {
         }
     }
 
+
+    //TODO: ****** ADJUST TO SHOW HERE ARE THE DEPOSITS: AND HERE ARE THE PAYMENTS:*******
     public static void getTransactions() {
         for (Transaction transaction : transactions) {
             System.out.println(transaction);
@@ -176,7 +178,7 @@ public class Ledger {
         //Results will hold what the user wants filtered in an array of Boolean values.
         ArrayList<Boolean> results = new ArrayList<>(transactions.size());
 
-        //Size up the array by seeing how many transactions we have. We are assuming everything is true first.
+        //Size up the array by seeing how many transactions we have. We are assuming every transactions are true first.
         for (int i = 0; i < transactions.size(); i++) {
             results.add(true);
         }
@@ -184,20 +186,25 @@ public class Ledger {
         //For loop to see which field has something in it and see if the search matches a field.
         for (int i = 0; i < transactions.size(); i++) {
             Transaction transaction = transactions.get(i);
-            if (endDate != null && transaction.getDate().isBefore(endDate)) {
+            if (endDate != null && transaction.getDate().isAfter(endDate)) {
                 results.set(i, false);
+                continue;
             }
-            if (startDate != null && transaction.getDate().isAfter(startDate)) {
+            else if (startDate != null && transaction.getDate().isBefore(startDate)) {
                 results.set(i, false);
+                continue;
             }
             //How to keep adding on to the end result?
-            if (description != null && !transaction.getDescription().equalsIgnoreCase(description)) {
+            //Still need to keep checking somehow description search is empty we should just move on.
+            else if (description != null && transaction.getDescription().equalsIgnoreCase(description)) {
                 results.set(i, false);
+                continue;
             }
-            if (vendor != null && !transaction.getVendor().equalsIgnoreCase(vendor)) {
+            else if (vendor != null && transaction.getVendor().equalsIgnoreCase(vendor)) {
                 results.set(i, false);
+                continue;
             }
-            if (amount != null && transaction.getAmount() != amount && transaction.getAmount() < amount) {
+            else if (amount != null && transaction.getAmount() != amount && transaction.getAmount() < amount) {
                 results.set(i, false);
             }
         }

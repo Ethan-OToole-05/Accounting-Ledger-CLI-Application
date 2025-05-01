@@ -27,6 +27,7 @@ public class AccountingApp {
                     case 'D':
                         try {
                             //TODO: ***** NEEDS BETTER ERROR HANDLING USER CAN INPUT ANYTHING AT THIS MOMENT *****
+                            //Error handling done??????
                             menu.displayAddDeposit();
                             System.out.print("Description: ");
                             String descriptionDepositInput = input.nextLine();
@@ -141,8 +142,13 @@ public class AccountingApp {
 
                                             LocalDate inputStartDate = LocalDate.parse(startDate);
                                             LocalDate inputEndDate = LocalDate.parse(endDate);
-                                            Float inputAmount = Float.parseFloat(amount);
+                                            //TODO: **** ALLOW FOR NULL VALUE ****
+                                            Float inputAmount = null;
+                                            if (!amount.isEmpty()) {
+                                                inputAmount = Float.parseFloat(amount);
+                                            }
                                             Ledger.customSearch(inputStartDate, inputEndDate, description, vendor, inputAmount);
+
                                         } catch (Exception e) {
 //                                            System.out.println(e.getMessage());
                                             System.out.println("Invalid search. Please try again.");
@@ -150,15 +156,13 @@ public class AccountingApp {
                                         break;
                                     case 0:
                                         //Back to report page?
-                                        break;
                                     default:
                                         System.out.println("Invalid input. Try again.");
                                 }
-                                break;
                             case 'H':
                                 break;
                         }
-                        break;
+//                        break;
                     case 'X':
                         //Exits the program.
                         System.out.println("Thank you for using the app!");
