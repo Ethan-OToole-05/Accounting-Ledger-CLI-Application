@@ -118,18 +118,6 @@ public class Menu {
 
     public void displayCustomSearch() {
         System.out.println("Please enter the search values you want: ");
-        System.out.print("Start Date: ");
-        //getline
-        System.out.print("End Date: ");
-        //getline
-        System.out.print("Description: ");
-        //getline
-        System.out.print("Vendor: ");
-        //getline
-        System.out.print("Amount: ");
-        //getline
         System.out.println();
-
-
     }
 }

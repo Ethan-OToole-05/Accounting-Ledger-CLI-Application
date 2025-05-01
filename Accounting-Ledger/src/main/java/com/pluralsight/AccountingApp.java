@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
@@ -127,7 +128,21 @@ public class AccountingApp {
                                         try {
                                             //Custom search Challenge
                                             menu.displayCustomSearch();
-                                            Ledger.customSearch(null, null, null, null, 19.99f);
+                                            System.out.print("Start Date (Year-Month-Date): ");
+                                            String startDate = input.nextLine();
+                                            System.out.print("End Date (Year-Month-Date): ");
+                                            String endDate = input.nextLine();
+                                            System.out.print("Description: ");
+                                            String description = input.nextLine();
+                                            System.out.print("Vendor: ");
+                                            String vendor = input.nextLine();
+                                            System.out.print("Amount: ");
+                                            String amount = input.nextLine();
+
+                                            LocalDate inputStartDate = LocalDate.parse(startDate);
+                                            LocalDate inputEndDate = LocalDate.parse(endDate);
+                                            Float inputAmount = Float.parseFloat(amount);
+                                            Ledger.customSearch(inputStartDate, inputEndDate, description, vendor, inputAmount);
                                         } catch (Exception e) {
 //                                            System.out.println(e.getMessage());
                                             System.out.println("Invalid search. Please try again.");
