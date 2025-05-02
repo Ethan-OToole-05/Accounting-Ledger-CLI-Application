@@ -1,3 +1,5 @@
 date|time|description|vendor|amount
-2025-05-01|15:33:12|test|test|50.0
-2025-05-01|15:33:50|test|test|-50.0
+2024-03-01|12:00:00|Payment|Bob|-99.99
+2024-03-01|08:00:00|Paycheck|Work|199.99
+2025-04-30|15:00:00|New Shoes|Amazon|-49.99
+2025-04-30|18:00:00|Tips|Work|99.99

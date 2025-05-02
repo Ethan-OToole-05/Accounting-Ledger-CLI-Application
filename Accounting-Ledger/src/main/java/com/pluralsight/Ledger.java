@@ -17,7 +17,6 @@ public class Ledger {
 
     //Loading the transactions into our app for use.
     public ArrayList<Transaction> loadTransactions() {
-
         try {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader reader = new BufferedReader(fileReader);
@@ -88,8 +87,7 @@ public class Ledger {
         }
     }
 
-
-    //Always make payment amount negative if userinput is positive? Instead of saying invalid input?
+    //Adding a new payment to add to the transactions list.
     public static void addPayment(String description, String vendor, float amount) {
         try {
             //If amount is positive we will make it negative for payments.
@@ -195,7 +193,6 @@ public class Ledger {
     public static void searchByVendor(String vendor) {
         String searchVendor = vendor;
         boolean vendorFound = false;
-        //What is display if we can't find the vendor?
         for (Transaction transaction : transactions) {
             if (transaction.getVendor().equalsIgnoreCase(searchVendor)) {
                 vendorFound = true;
@@ -228,7 +225,6 @@ public class Ledger {
             if (startDate != null && transaction.getDate().isBefore(startDate)) {
                 meetsSearch = false;
             }
-            //How to keep adding on to the end result?
             //Checks description is not empty, and if it does not match our transaction's description the search is false.
             if (!description.isEmpty() && !transaction.getDescription().equalsIgnoreCase(description)) {
                 meetsSearch = false;
@@ -246,7 +242,6 @@ public class Ledger {
             if (!meetsSearch) {
                 results.set(i, false);
             }
-            //Different toggle for amounts.
         }
         //Print out the results of each transaction that matched the filtered results.
         for (int i = 0; i < transactions.size(); i++) {
@@ -254,12 +249,6 @@ public class Ledger {
                 System.out.println(transactions.get(i));
             }
         }
-//            System.out.println(transaction);
-//            results.add(transaction);
-//        System.out.println(filteredResults);
-
     }
-
-//        return results;
 }
 

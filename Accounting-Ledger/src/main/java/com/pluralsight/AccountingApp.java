@@ -1,6 +1,5 @@
 package com.pluralsight;
 
-import java.nio.channels.ScatteringByteChannel;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -15,7 +14,6 @@ public class AccountingApp {
         System.out.println("Welcome to the account ledger app!");
 
         while (continueAnswer) {
-
             menu.displayHome();
             userOption = input.nextLine();
             if (userOption.isEmpty()) {
@@ -74,100 +72,107 @@ public class AccountingApp {
                         }
                         break;
                     case 'L':
-                        try {
-                            menu.displayLedger();
-                            userOption = input.nextLine();
-                            option = userOption.trim().toUpperCase().charAt(0);
-                        } catch (Exception e) {
-                            System.out.println("Invalid input. Please try again.");
-                        }
-
-                        switch (option) {
-                            //TODO: *****NEED TO ADD ABILITY TO RETURN TO LEDGER WHEN IN REPORTS SCREEN. *****
-                            //Ledger Screen
-                            case 'A':
-                                menu.displayAll();
-                                break;
-                            case 'D':
-                                menu.displayDeposits();
-                                break;
-                            case 'P':
-                                menu.displayPayments();
-                                break;
-                            case 'R':
-//                                menu.displayReports();
-                                int reportOption = 1;
-                                while(reportOption != 0 ) {
-                                    menu.displayReports();
-                                    reportOption = input.nextInt();
-                                    input.nextLine(); //Consuming the CRLF.
-                                    switch (reportOption) {
-                                        //Reports screen
-                                        case 1:
-                                            //show month to date.
-                                            menu.displayMonthToDate();
-                                            break;
-                                        case 2:
-                                            //show previous month
-                                            menu.displayPreviousMonthToDate();
-                                            break;
-                                        case 3:
-                                            //Show year to date
-                                            menu.displayYearToDate();
-                                            break;
-                                        case 4:
-                                            //show previous year
-                                            menu.displayPreviousYearToDate();
-                                            break;
-                                        case 5:
-                                            try {
-                                                //Search by Vendor
-                                                System.out.print("Please enter the name of the vendor: ");
-                                                String vendor = input.nextLine().trim();
-                                                menu.displaySearchByVendor(vendor);
-                                            } catch (Exception e) {
+                        //Loops until the H option is selected to go back to the home screen.
+                        while (option != 'H') {
+                            try {
+                                menu.displayLedger();
+                                userOption = input.nextLine();
+                                option = userOption.trim().toUpperCase().charAt(0);
+                            } catch (Exception e) {
+                                System.out.println("Invalid input. Please try again.");
+                            }
+                            switch (option) {
+                                //Ledger Screen
+                                case 'A':
+                                    menu.displayAll();
+                                    break;
+                                case 'D':
+                                    menu.displayDeposits();
+                                    break;
+                                case 'P':
+                                    menu.displayPayments();
+                                    break;
+                                case 'R':
+                                    int reportOption = 1;
+                                    //Loop until report option is 0 to go back to the ledger.
+                                    while (reportOption != 0) {
+                                        try {
+                                            menu.displayReports();
+                                            reportOption = input.nextInt();
+                                            input.nextLine(); //Consuming the CRLF.
+                                        } catch (Exception e) {
+                                            System.out.println("Invalid input. Please try again.");
+                                        }
+                                        switch (reportOption) {
+                                            //Reports screen
+                                            case 1:
+                                                //show month to date.
+                                                menu.displayMonthToDate();
+                                                break;
+                                            case 2:
+                                                //show previous month
+                                                menu.displayPreviousMonthToDate();
+                                                break;
+                                            case 3:
+                                                //Show year to date
+                                                menu.displayYearToDate();
+                                                break;
+                                            case 4:
+                                                //show previous year
+                                                menu.displayPreviousYearToDate();
+                                                break;
+                                            case 5:
+                                                try {
+                                                    //Search by Vendor
+                                                    System.out.print("Please enter the name of the vendor: ");
+                                                    String vendor = input.nextLine().trim();
+                                                    menu.displaySearchByVendor(vendor);
+                                                } catch (Exception e) {
 //                                            System.out.println(e.getMessage());
-                                                System.out.println("Invalid vendor. Please try again.");
-                                            }
-                                            break;
-                                        case 6:
-                                            try {
-                                                //Custom search Challenge
-                                                menu.displayCustomSearch();
-                                                System.out.print("Start Date (Year-Month-Date): ");
-                                                String startDate = input.nextLine();
-                                                System.out.print("End Date (Year-Month-Date): ");
-                                                String endDate = input.nextLine();
-                                                System.out.print("Description: ");
-                                                String description = input.nextLine();
-                                                System.out.print("Vendor: ");
-                                                String vendor = input.nextLine();
-                                                System.out.print("Amount to search up to (Ex: all transactions up to 20.00): ");
-                                                String amount = input.nextLine();
-
-                                                LocalDate inputStartDate = LocalDate.parse(startDate);
-                                                LocalDate inputEndDate = LocalDate.parse(endDate);
-                                                Float inputAmount = null;
-                                                if (!amount.isEmpty()) {
-                                                    inputAmount = Float.parseFloat(amount);
+                                                    System.out.println("Invalid vendor. Please try again.");
                                                 }
-                                                Ledger.customSearch(inputStartDate, inputEndDate, description, vendor, inputAmount);
+                                                break;
+                                            case 6:
+                                                try {
+                                                    //Custom search Challenge
+                                                    menu.displayCustomSearch();
+                                                    System.out.print("Start Date (Year-Month-Date): ");
+                                                    String startDate = input.nextLine();
+                                                    System.out.print("End Date (Year-Month-Date): ");
+                                                    String endDate = input.nextLine();
+                                                    System.out.print("Description: ");
+                                                    String description = input.nextLine();
+                                                    System.out.print("Vendor: ");
+                                                    String vendor = input.nextLine();
+                                                    System.out.print("Amount to search up to (Ex: all transactions up to $20.00): ");
+                                                    String amount = input.nextLine();
 
-                                            } catch (Exception e) {
+                                                    LocalDate inputStartDate = LocalDate.parse(startDate);
+                                                    LocalDate inputEndDate = LocalDate.parse(endDate);
+                                                    Float inputAmount = null;
+                                                    if (!amount.isEmpty()) {
+                                                        inputAmount = Float.parseFloat(amount);
+                                                    }
+                                                    Ledger.customSearch(inputStartDate, inputEndDate, description, vendor, inputAmount);
+
+                                                } catch (Exception e) {
 //                                            System.out.println(e.getMessage());
-                                                System.out.println("Invalid search. Please try again.");
-                                            }
-                                            break;
-                                        case 0:
-                                            break;
-                                        default:
-                                            System.out.println("Invalid input. Try again.");
+                                                    System.out.println("Invalid search. Please try again.");
+                                                }
+                                                break;
+                                            case 0:
+                                                break;
+                                            default:
+                                                System.out.println("Invalid input. Please try again.");
+                                        }
                                     }
-                                }
-                            case 'H':
-                                break;
+                                case 'H':
+                                    break;
+                                default:
+                                    System.out.println("Invalid input. Please try again.");
+                            }
                         }
-                        break; //WHERE REPORTS GOES WHEN DONE. SKIPS CASE X
+                        break;
                     case 'X':
                         //Exits the program.
                         System.out.println("Thank you for using the app!");
@@ -176,7 +181,6 @@ public class AccountingApp {
                     default:
                         System.out.println("Invalid input. Please try again. ");
                 }
-
             }
         }
     }
