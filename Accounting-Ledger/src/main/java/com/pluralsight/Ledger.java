@@ -2,14 +2,17 @@ package com.pluralsight;
 
 import java.io.*;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
+import java.sql.*;
 import java.util.*;
 
 public class Ledger {
     private static ArrayList<Transaction> transactions = new ArrayList<>();
-    private static TimeStamp timeStamp = new TimeStamp();
-    private static String fileName = "src/main/resources/transactions.csv";
-    private static LocalDateTime compareDateTime;
+        private static TimeStamp timeStamp = new TimeStamp();
+        private static String fileName = "src/main/resources/transactions.csv";
+        private static LocalDateTime compareDateTime;
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/transactions_db"; // Use your database name
+    private static final String USER = "root"; // Replace with your DB username
+    private static final String PASS = "yearup"; // Replace with your DB password
 
     public Ledger() {
 
@@ -17,60 +20,78 @@ public class Ledger {
 
     //Loading the transactions into our app for use.
     public ArrayList<Transaction> loadTransactions() {
-        try {
-            FileReader fileReader = new FileReader(fileName);
-            BufferedReader reader = new BufferedReader(fileReader);
+        transactions.clear(); // Clear existing transactions to load fresh from DB
 
-            String input;
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM transactions ORDER BY date DESC, time DESC")) {
 
-            while ((input = reader.readLine()) != null) {
-                if (input.startsWith("Date") || input.startsWith("date")) {
-                    continue;
-                }
-                String[] items = input.split("\\|");
-                LocalDate date = LocalDate.parse(items[0], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                LocalTime time = LocalTime.parse(items[1], DateTimeFormatter.ofPattern("HH:mm:ss"));
-                String description = items[2];
-                String vendor = items[3];
-                float amount = Float.parseFloat(items[4]);
+            System.out.println("Loading transactions from database...");
+
+            while (rs.next()) {
+                LocalDate date = rs.getDate("date").toLocalDate();
+                LocalTime time = rs.getTime("time").toLocalTime();
+                String description = rs.getString("description");
+                String vendor = rs.getString("vendor");
+                float amount = rs.getFloat("amount");
+
                 transactions.add(new Transaction(date, time, amount, description, vendor));
-
             }
-            reader.close();
-        } catch (IOException e) {
+            System.out.println("Transactions loaded successfully.");
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        Collections.sort(transactions, Comparator.comparing(Transaction::getDateTime).reversed());
         return transactions;
     }
 
+
     //Adding a new deposit to add to the transactions list.
     public static void addDeposit(String description, String vendor, float amount) {
-        try {
-            //If amount is negative we will make it positive regardless.
-            if (amount < 0) {
-                amount = Math.abs(amount);
-            }
-            //If description or vendor fields are empty we will not accept input.
-            if (description.isEmpty() || vendor.isEmpty()) {
-                System.out.println("Invalid Input. Please try again.");
+        // Input validation remains important
+        if (description.isEmpty() || vendor.isEmpty() || amount <= 0) { // Deposits must be positive
+            System.out.println("Invalid Input. Description and vendor cannot be empty, and amount must be positive. Please try again.");
+            return; // Exit method if input is invalid
+        }
+
+        // Ensure amount is positive for a deposit, even if somehow passed negative
+        amount = Math.abs(amount);
+
+        // Get current timestamp for date and time columns
+        LocalDateTime now = timeStamp.getTimestamp(); // Or just LocalDateTime.now();
+        LocalDate transactionDate = now.toLocalDate();
+        LocalTime transactionTime = now.toLocalTime();
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement statement = conn.prepareStatement(
+                     "INSERT INTO transactions (date, time, description, vendor, amount) VALUES (?, ?, ?, ?, ?)"
+             )) {
+
+            // Set the parameters for the PreparedStatement
+            statement.setDate(1, java.sql.Date.valueOf(transactionDate));       // Convert LocalDate to java.sql.Date
+            statement.setTime(2, java.sql.Time.valueOf(transactionTime));       // Convert LocalTime to java.sql.Time
+            statement.setString(3, description);
+            statement.setString(4, vendor);
+            statement.setFloat(5, amount);
+
+            // Execute the insert statement
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Deposit added successfully to the database!");
+                // Also add to the in-memory list for immediate use without reloading
+                transactions.add(new Transaction(transactionDate, transactionTime, amount, description, vendor));
+                // It's good practice to re-sort after adding if your display relies on it
+                Collections.sort(transactions, Comparator.comparing(Transaction::getDateTime).reversed());
             } else {
-                FileWriter fileWriter = new FileWriter(fileName, true);
-                BufferedWriter writer = new BufferedWriter(fileWriter);
-
-                //Gets time and date right now.
-                LocalDateTime now;
-                now = timeStamp.getTimestamp();
-                String formattedTime = timeStamp.formatTimestamp(now);
-
-                writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
-                writer.newLine();
-                writer.close();
-                transactions.add(new Transaction(amount, description, vendor));
+                System.out.println("Failed to add deposit to the database.");
             }
 
-        } catch (IOException e) {
+        } catch (SQLException e) {
+            System.err.println("Database error while adding deposit!");
+            System.err.println("SQL State: " + e.getSQLState());
+            System.err.println("Error Code: " + e.getErrorCode());
             e.printStackTrace();
         }
     }
@@ -89,29 +110,44 @@ public class Ledger {
 
     //Adding a new payment to add to the transactions list.
     public static void addPayment(String description, String vendor, float amount) {
-        try {
-            //If amount is positive we will make it negative for payments.
-            if (amount > 0) {
-                amount = -Math.abs(amount);
-            }
-            //If description or vendor fields are empty we will not accept input.
-            if (description.isEmpty() || vendor.isEmpty()) {
-                System.out.println("Invalid input. Please try again.");
+        // Input validation remains important
+        if (description.isEmpty() || vendor.isEmpty() || amount >= 0) { // Payments must be negative
+            System.out.println("Invalid Input. Description and vendor cannot be empty, and amount must be negative. Please try again.");
+            return; // Exit method if input is invalid
+        }
+
+        // Get current timestamp for date and time columns
+        LocalDateTime now = timeStamp.getTimestamp(); // Or just LocalDateTime.now();
+        LocalDate transactionDate = now.toLocalDate();
+        LocalTime transactionTime = now.toLocalTime();
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             PreparedStatement statement = conn.prepareStatement(
+                     "INSERT INTO transactions (date, time, description, vendor, amount) VALUES (?, ?, ?, ?, ?)"
+             )) {
+
+            // Set the parameters for the PreparedStatement
+            statement.setDate(1, java.sql.Date.valueOf(transactionDate));       // Convert LocalDate to java.sql.Date
+            statement.setTime(2, java.sql.Time.valueOf(transactionTime));       // Convert LocalTime to java.sql.Time
+            statement.setString(3, description);
+            statement.setString(4, vendor);
+            statement.setFloat(5, amount);
+
+            // Execute the insert statement
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Payment added successfully to the database!");
+                transactions.add(new Transaction(transactionDate, transactionTime, amount, description, vendor));
+                Collections.sort(transactions, Comparator.comparing(Transaction::getDateTime).reversed());
             } else {
-                FileWriter fileWriter = new FileWriter(fileName, true);
-                BufferedWriter writer = new BufferedWriter(fileWriter);
-
-                LocalDateTime now;
-                now = timeStamp.getTimestamp();
-                String formattedTime = timeStamp.formatTimestamp(now);
-
-                writer.write(formattedTime + "|" + description + "|" + vendor + "|" + amount);
-                writer.newLine();
-                writer.close();
-                transactions.add(new Transaction(amount, description, vendor));
+                System.out.println("Failed to add payment to the database.");
             }
 
-        } catch (IOException e) {
+        } catch (SQLException e) {
+            System.err.println("Database error while adding deposit!");
+            System.err.println("SQL State: " + e.getSQLState());
+            System.err.println("Error Code: " + e.getErrorCode());
             e.printStackTrace();
         }
     }
