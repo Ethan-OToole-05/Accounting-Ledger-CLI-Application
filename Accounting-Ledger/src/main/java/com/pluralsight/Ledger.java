@@ -251,11 +251,22 @@ public class Ledger {
         }
     }
     public static void showBalance() {
-        float balance = 0;
+        float totalDeposits = 0;
+        float totalPayments = 0;
+
         for (Transaction transaction : transactions) {
-            balance += transaction.getAmount();
+            if (transaction.getAmount() > 0) {
+                totalDeposits += transaction.getAmount();
+            } else {
+                totalPayments += transaction.getAmount(); // payment is negative
+            }
         }
-        System.out.printf("Current Balance: $%.2f\n", balance);
+
+        float netBalance = totalDeposits + totalPayments;
+
+        System.out.printf("Total Deposits : $%.2f\n", totalDeposits);
+        System.out.printf("Total Payments : -$%.2f\n", Math.abs(totalPayments));
+        System.out.printf("Net Balance    : $%.2f\n", netBalance);
     }
 }
 
