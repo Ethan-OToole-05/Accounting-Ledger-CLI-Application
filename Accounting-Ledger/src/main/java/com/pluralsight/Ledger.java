@@ -265,7 +265,7 @@ public class Ledger {
         float netBalance = totalDeposits + totalPayments;
 
         System.out.printf("Total Deposits : $%.2f\n", totalDeposits);
-        System.out.printf("Total Payments : -$%.2f\n", Math.abs(totalPayments));
+        System.out.printf("Total Payments : $%.2f\n", totalPayments);
         System.out.printf("Net Balance    : $%.2f\n", netBalance);
     }
 }
