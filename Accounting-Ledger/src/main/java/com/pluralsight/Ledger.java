@@ -8,7 +8,7 @@ import java.util.*;
 public class Ledger {
     private static ArrayList<Transaction> transactions = new ArrayList<>();
     private static TimeStamp timeStamp = new TimeStamp();
-    private static String fileName = "src/main/resources/transactions.csv";
+    private static String fileName = "/Users/ozangul/pluralsight/Accounting-Ledger-CLI-Application/Accounting-Ledger/src/main/resources/transactions.csv";
     private static LocalDateTime compareDateTime;
 
     public Ledger() {
@@ -249,6 +249,13 @@ public class Ledger {
                 System.out.println(transactions.get(i));
             }
         }
+    }
+    public static void showBalance() {
+        float balance = 0;
+        for (Transaction transaction : transactions) {
+            balance += transaction.getAmount();
+        }
+        System.out.printf("Current Balance: $%.2f\n", balance);
     }
 }
 
